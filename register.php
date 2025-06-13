@@ -1,9 +1,9 @@
 <fieldset>
   <legend>Register</legend>
   <form action="" method="post">
-    <input type="text" name="nom" placeholder="Votre nom" require>
-    <input type="email" name="email" placeholder="Votre email" require>
-    <input type="password" name="mot_pass" placeholder="Entrer votre mot de pass" require>
+    <input type="text" name="nom" placeholder="Votre nom" required>
+    <input type="email" name="email" placeholder="Votre email" required>
+    <input type="password" name="mot_pass" placeholder="Entrer votre mot de pass" required>
     <button type="submit">Enregistrer</button>
   </form>
   <?php
@@ -14,7 +14,7 @@
       echo "<p>Enregistrement reussi</p>";
     }
   ?>
-  <p><a href="register.php">Se connecter</a></p>
+  <p><a href="login.php">Se connecter</a></p>
 </fieldset>
 
 <?php
@@ -33,9 +33,9 @@
     }
 
     try{
-      $stmt = $pdo->prepare("INSERT INTO * FROM users VALUE(?,?,?,?)");
+      $stmt = $pdo->prepare("INSERT INTO users VALUE(?,?,?,?)");
       $stmt->execute([NULL,$nom,$email,$mot_pass]);
-      header("Location:register.php?rgt=1?");
+      header("Location:register.php?rgt=1");
     }
     catch(PDOException $e){
       echo "Erreur lors de l'enragistrement : " . $e->getMessage();

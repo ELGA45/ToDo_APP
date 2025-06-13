@@ -1,0 +1,10 @@
+<?php
+  session_start();
+  if(isset($_SESSION['userConnected'])){
+    header('Location:dashbord.php');
+    exit();
+  }
+  else{
+    header("Location:login.php?auth=0");
+    exit();
+  }

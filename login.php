@@ -1,13 +1,16 @@
 <fieldset>
   <legend>LOGIN</legend>
   <form action="" method="post">
-    <input type="email" name="email" placeholder="Votre email" require>
-    <input type="password" name="mot_pass" placeholder="Entrer votre mot de pass" require>
+    <input type="email" name="email" placeholder="Votre email" required>
+    <input type="password" name="mot_pass" placeholder="Entrer votre mot de pass" required>
     <button type="submit">Se connecter</button>
   </form>
   <?php
     if(isset($_GET['log']) && $_GET['log'] == 1){
       echo "<p>email ou mot de passe incorrect</p>";
+    }
+    if(isset($_GET['auth']) && $_GET['auth'] == 0 ){
+      echo "<p>Merci de vous connecter</p>";
     }
   ?>
   <p><a href="register.php">Créer un compte</a></p>
@@ -26,14 +29,16 @@
         echo "Erreur lors de la récupération des données : " . $e->getMessage();
     }
 
+    $connected = false;
     foreach($users as $user){
       if($email == $user['email'] && $mot_pass == $user['mot_passe']){
         session_start();
-        $_SESSION['userconnected'] = $user;
-        echo "pppp";
+        $_SESSION['userConnected'] = $user;
+        header('Location:dashbord.php');
+        $connected = true;
       }
-      else{
-        header("Location:login.php?log=1");
-      }
+    }
+    if(!$connected){
+        header('Location:login.php?log=1');
     }
   }
