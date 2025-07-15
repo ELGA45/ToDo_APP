@@ -29,11 +29,12 @@
 
 
 <?php
+  session_start();
   if($_SERVER['REQUEST_METHOD'] === 'POST'){
     extract($_POST);
-    include 'config/db.php';
+    include 'config/user.php';
 
-    try{
+    /*try{
       $stmt = $pdo->query("SELECT * FROM users");
       $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
@@ -52,5 +53,24 @@
     }
     if(!$connected){
         header('Location:login.php?log=1');
+    }*/
+
+    $emailUser = new Utilisateur();
+    $users = $emailUser->ReadAll();
+
+    $connected = false;
+    foreach($users as $user){
+      if($email == $user['email'] && $mot_pass == $user['mot_passe']){
+        session_start();
+        $_SESSION['userConnected'] = $user;
+        header('Location:dashbord.php');
+        $connected = true;
+      }
+    }
+    if(!$connected){
+        header('Location:login.php?log=1');
+        exit();
     }
   }
+
+  

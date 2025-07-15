@@ -1,8 +1,8 @@
 <?php
   if(isset($_GET['id'])){
-    include 'config/db.php';
-    $stmt = $pdo->query("SELECT * FROM tasks WHERE id=".$_GET['id']."");
-    $task = $stmt->fetch(PDO::FETCH_ASSOC);
+    include 'config/task.php';
+    $tache = new Task();
+    $task = $tache->Tache($_GET['id']);
   ?>  
     <fieldset>
       <legend>Validation</legend>
@@ -18,8 +18,8 @@
     if($_SERVER['REQUEST_METHOD'] === 'POST'){
       extract($_POST);
       if($val == "oui"){
-        $stmt = $pdo->prepare("DELETE FROM tasks WHERE id = ?");
-        $stmt->execute([$id]);
+        $tache = new Task();
+        $tache->Delete($id);
         header('Location:dashbord.php');
       }
       else{

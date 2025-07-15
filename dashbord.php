@@ -3,10 +3,11 @@
   if(isset($_SESSION['userConnected'])){
     $id_user = $_SESSION['userConnected']['id'];
 
-    include 'config/db.php';
-    $stmt = $pdo->query("SELECT * FROM tasks
-                        WHERE user_id = $id_user");
-    $tasks = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    include 'config/task.php';
+
+    $task = new Task();
+    $tasks = $task->TacheUser($id_user);
+    
     if($tasks){ ?>
       <!DOCTYPE html>
       <html lang="en">
@@ -47,7 +48,7 @@
 <?php }
       else{
         echo "Pas de tache <br>";
-        echo "<a href="add_task.php">Ajouter une tache </a>";
+        echo "<a href='add_task.php'>Ajouter une tache </a>";
       }
   }
   else{

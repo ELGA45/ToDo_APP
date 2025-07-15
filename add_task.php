@@ -29,14 +29,10 @@
     if($_SERVER['REQUEST_METHOD'] === 'POST'){
       extract($_POST);
       
-      include 'config/db.php';
+      include 'config/task.php';
 
-      try {
-        $stmt = $pdo->prepare("INSERT INTO tasks(user_id, titre, description, date_limite) VALUE(?,?,?,?)");
-        $stmt->execute([$id_user, $titre, $description, $date_limite]);
-        echo "Tache Ajouter avec succé";
-      } catch (PDOException $e) {
-        echo "Erreur lors de l'ajout : " . $e->getMessage();
-      }
+      $task = new Task();
+      $task->CreateTask($id_user, $titre, $description, $date_limite);
+
     }
   }

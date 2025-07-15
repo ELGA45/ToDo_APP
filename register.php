@@ -33,23 +33,19 @@
   if($_SERVER['REQUEST_METHOD'] === 'POST'){
     extract($_POST);
 
-    include 'config/db.php';
+    include 'config/user.php';
 
-    $stmt = $pdo->query("SELECT * FROM users");
-    $users = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    $emailUser = new Utilisateur();
+    $user = $emailUser->ReadByEmail($email);
 
-    foreach($users as $user){
-      if($email == $user['email']){
-        header("Location:register.php?rgt=0");
-      }
+    
+    if($user && $email == $user['email']){
+      header("Location:register.php?rgt=0");
+      exit();
     }
-
-    try{
-      $stmt = $pdo->prepare("INSERT INTO users VALUE(?,?,?,?)");
-      $stmt->execute([NULL,$nom,$email,$mot_pass]);
-      header("Location:register.php?rgt=1");
-    }
-    catch(PDOException $e){
-      echo "Erreur lors de l'enragistrement : " . $e->getMessage();
-    }
+    
+    $utilisateur = new Utilisateur();
+    $utilisateur->CreateUser($nom, $email, $mot_pass);
   }
+
+  
