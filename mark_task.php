@@ -1,10 +1,15 @@
 <?php
   session_start();
-  if(isset($_SESSION['userConnected']) && isset($_GET['id'])){
-    include 'config/task.php';
-    
-    $task = new Task();
-    $statut = $task->Tache($_GET['id']);
+    if(isset($_SESSION['userConnected']) && isset($_GET['id'])){
+        include 'config/task.php';
+        
+        $task = new Task();
+        $statut = $task->Tache($_GET['id']);
+        
+        // Vérifiez si la tâche existe
+        if(!$statut) {
+            die("Tâche non trouvée ou vous n'avez pas les droits pour la modifier");
+      }
 
 ?>
 

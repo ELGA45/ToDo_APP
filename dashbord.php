@@ -35,7 +35,8 @@
                 <p>Date limite: <?php echo $task['date_limite']?></p>
               </div>
               <div class="action">
-                <button class="btn-2"><?php echo "<a href='mark_task.php?id=".$task['id']."'>Marquer comme faite</a>"?></button>
+                <?php $statut = $task['statut'] === "non faite"?'Marquer comme faite':'faite'?>
+                <button class="btn-2"><?php echo "<a href='mark_task.php?id=".$task['id']."'>".$statut."</a>"?></button>
                 <button class="btn-2"><?php echo "<a href='delete.php?id=".$task['id']."'>Supprimer</a>"?></button>
               </div>
             </div>

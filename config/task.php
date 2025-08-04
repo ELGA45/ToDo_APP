@@ -27,9 +27,9 @@
 
     // Lire statut d'une tache 
     public function Tache($id){
-      $stmt = $this->conn->query("SELECT * FROM tasks
-                        WHERE user_id = $id");
-      return $stmt->fetch(PDO::FETCH_ASSOC);
+      $stmt = $this->conn->prepare("SELECT * FROM tasks WHERE id = ?");
+      $stmt->execute([$id]);
+      return $stmt->fetch(PDO::FETCH_ASSOC); // Retourne false si aucune ligne trouvée
     }
 
     //  Changer de statut
